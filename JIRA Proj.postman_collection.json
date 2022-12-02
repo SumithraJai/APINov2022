@@ -1,0 +1,338 @@
+{
+	"info": {
+		"_postman_id": "5418a62b-ef8a-4ca4-9b53-59747c171e46",
+		"name": "JIRA Proj",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"//Setting Global variable for Bug ID\r",
+							"Resp = pm.response.json();\r",
+							"IssueID = Resp.id;\r",
+							"pm.globals.set(\"G_IssueID\",IssueID);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n    \"project\":\r\n                {\r\n                    \"key\": \"BUG\"\r\n                },\r\n    \"summary\": \"create issue in RA project\",\r\n    \"description\": \"Creating of an issue using project keys and issue type names using the REST API\",\r\n    \"issuetype\": {\r\n                    \"name\": \"Bug\"\r\n                }\r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{JIRAURL}}/rest/api/2/issue/",
+					"protocol": "https",
+					"host": [
+						"{{JIRAURL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View BUG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Printing the Issue id in console\r",
+							"console.log(\"Issue ID created is \"+pm.globals.get(\"G_IssueID\"))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{JIRAURL}}/rest/api/2/issue/{{G_IssueID}}",
+					"protocol": "https",
+					"host": [
+						"{{JIRAURL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{G_IssueID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit BUG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n\r\n        \"description\": \"Bug creation Using REST API for testing\"\r\n        \r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{JIRAURL}}/rest/api/2/issue/{{G_IssueID}}",
+					"protocol": "https",
+					"host": [
+						"{{JIRAURL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{G_IssueID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete BUG",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{JIRAURL}}/rest/api/2/issue/10018",
+					"protocol": "https",
+					"host": [
+						"{{JIRAURL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"10018"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search all BUGS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{JIRAURL}}/rest/api/2/search?jql=project=\"BUG\"",
+					"protocol": "https",
+					"host": [
+						"{{JIRAURL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"search"
+					],
+					"query": [
+						{
+							"key": "jql",
+							"value": "project=\"BUG\""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all Issue Types",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{JIRAURL}}/rest/api/2/issuetype",
+					"protocol": "https",
+					"host": [
+						"{{JIRAURL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issuetype"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List specific Issue Type with ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{JIRAURL}}/rest/api/2/issue/{{G_IssueID}}",
+					"protocol": "https",
+					"host": [
+						"{{JIRAURL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{G_IssueID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "29JTe4xKyQaXZW79AiUDC3A0",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "sumithrad9@gmail.com",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "JIRAURL",
+			"value": "api06.atlassian.net",
+			"type": "default"
+		}
+	]
+}
