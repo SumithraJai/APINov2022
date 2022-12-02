@@ -1,0 +1,27 @@
+{
+	"id": "146e52f0-fd32-4814-8e58-8a3c0f4d5eb7",
+	"values": [
+		{
+			"key": "G_Sys_id",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "G_UUid",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "G_IssueID",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"name": "My Workspace Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2022-12-02T16:23:56.302Z",
+	"_postman_exported_using": "Postman/10.5.2"
+}
